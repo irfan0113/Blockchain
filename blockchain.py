@@ -1,6 +1,8 @@
 import hashlib
 import json
 from time import time
+from uuid import uuid4
+from flask import Flask
 
 class Blockchain(object):
     
@@ -59,3 +61,12 @@ class Blockchain(object):
         guess_hash = hashlib.sha256(guess).hexdigest()
         
         return guess_hash[:4] == "0000"
+    
+    app = Flask(__name__)
+    node_identifier = str(uuid4()).replace('-', '')
+    blockchain = Blockchain()
+    
+    @app.route('/mine', method = ['GET'])
+    
+    def mine():
+        
