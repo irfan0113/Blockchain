@@ -21,11 +21,7 @@ class Blockchain(object):
         self.current_transactions = []
         self.chain.append(block)
         
-        return block
-    
-    
-    
-    
+        return block    
     
     def new_transaction(self, sender, recipient, amount):
         self.current_transactions.append({
@@ -35,3 +31,13 @@ class Blockchain(object):
         })
         
         return self.last_block['index'] + 1
+    
+    @property
+    def last_block(self):
+        return self.chain[-1]
+    
+    @staticmethod
+    def hash(block):
+        block_string = json.dump(block, sort_keys=True).encode()
+        
+        return hashlib.sha256(block_string).hexdigest()
